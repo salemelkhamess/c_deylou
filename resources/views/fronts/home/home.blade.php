@@ -129,32 +129,22 @@
         }
 
 
-
+        .gallery-scroll {
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        .gallery-scroll > div {
+            scroll-snap-align: start;
+        }
 
     </style>
 @endsection
 
 @section('content')
 
-    <!-- Carousel -->
-    <div id="textCarousel" class="carousel slide mb-5 mt-4" data-bs-ride="carousel" data-bs-interval="3000">
-        <div class="carousel-inner bg-teal text-white py-5 px-3 rounded shadow position-relative overflow-hidden">
-            <div class="carousel-item active">
-                <h4 class="carousel-text text-center mb-0">Bienvenue au centre Deyloul pour les études stratégiques</h4>
-            </div>
-            <div class="carousel-item">
-                <h4 class="carousel-text text-center mb-0">Découvrez nos événements</h4>
-            </div>
-            <div class="carousel-item">
-                <h4 class="carousel-text text-center mb-0">Rejoignez-nous pour un avenir meilleur</h4>
-            </div>
-        </div>
-    </div>
-
-
     <!-- À propos du centre -->
     @if($centre)
-        <section id="centre" class="container mb-5">
+        <section id="centre" class="container mb-5 mt-4" style="margin-top: 20px">
             <div class="row align-items-center">
                 <div class="col-md-6" data-aos="fade-right">
                     <img src="{{ asset('assets/img/de.jpeg') }}" class="img-fluid rounded shadow" alt="Image du centre">
@@ -183,33 +173,38 @@
                                 <p class="card-text text-muted">{{ Str::limit($event->description, 100) }}</p>
                             </div>
                             <div class="card-footer bg-transparent border-0 text-end">
-                                <a href="#" class="btn btn-teal btn-sm">Voir plus</a>
+                                <a href="{{ route('evenements.show', $event->id) }}" class="btn btn-teal btn-sm">Voir plus</a>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
             <div class="text-center mt-4">
-                <a href="#" class="btn btn-teal btn-lg px-5">Voir tous les événements</a>
+                <a href="{{ route('evenements.all') }}" class="btn btn-teal btn-lg px-5">Voir tous les événements</a>
             </div>
         </div>
     </section>
-
     <!-- Galerie -->
     <section id="galerie" class="py-5 bg-white">
         <div class="container">
             <h3 class="text-center mb-4 text-teal">Galerie</h3>
-            <div class="row g-4">
+
+            <div class="gallery-scroll d-flex overflow-auto pb-3">
                 @foreach($galeries as $photo)
-                    <div class="col-md-4" data-aos="fade-up">
+                    <div class="flex-shrink-0 me-3" style="width: 300px;" data-aos="fade-up">
                         <div class="card border-0 shadow-sm">
-                            <img src="{{ asset('storage/' . $photo->image_path) }}" class="card-img-top rounded" style="height: 200px; object-fit: cover;" alt="Photo de la galerie">
+                            <img src="{{ asset('storage/' . $photo->image_path) }}"
+                                 class="card-img-top rounded"
+                                 style="height: 200px; object-fit: cover;"
+                                 alt="Photo de la galerie">
                         </div>
                     </div>
                 @endforeach
             </div>
+
         </div>
     </section>
+
 
     <!-- Vidéos -->
     <section id="videos" class="py-5 bg-light">
@@ -232,16 +227,28 @@
                                 @endif
                                 <p class="mt-2 text-muted">{{ $video->description }}</p>
                             </div>
+                            <div class="card-footer bg-transparent border-0 text-end">
+                                <a href="{{ route('videos.show', $video->id) }}" class="btn btn-teal btn-sm">Voir Détail</a>
+                            </div>
                         </div>
+
                     </div>
                 @endforeach
             </div>
 
             <!-- Lien pour voir toutes les vidéos -->
             <div class="text-center mt-4">
-                <a href="" class="btn btn-teal">Voir toutes les vidéos</a>
+                <a href="{{route('videos.all')}}" class="btn btn-teal">Voir toutes les vidéos</a>
             </div>
         </div>
     </section>
+
+    <script>
+        window.addEventListener('load', function () {
+            var navbarHeight = document.querySelector('nav').offsetHeight; // récupère la hauteur de la navbar
+            document.querySelector('.custom-carousel').style.marginTop = navbarHeight + 'px'; // applique la hauteur comme marge
+        });
+
+    </script>
 
 @endsection

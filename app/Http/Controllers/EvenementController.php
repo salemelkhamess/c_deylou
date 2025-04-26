@@ -46,6 +46,13 @@ class EvenementController extends Controller
         return view('evenements.edit', compact('evenement'));
     }
 
+    public function show($id)
+    {
+        $event = Evenement::findOrFail($id);
+        return view('fronts.events.show', compact('event'));
+    }
+
+
     public function update(Request $request, Evenement $evenement)
     {
         $request->validate([
@@ -71,5 +78,13 @@ class EvenementController extends Controller
     {
         $evenement->delete();
         return back()->with('success', 'Événement supprimé.');
+    }
+
+
+
+    public function allEvent()
+    {
+        $evenements = Evenement::latest()->paginate(9);
+        return view('fronts.events.index', compact('evenements'));
     }
 }

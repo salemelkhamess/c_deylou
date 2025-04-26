@@ -98,4 +98,18 @@ class VideoController extends Controller
         }
         return $url;
     }
+
+
+
+    public function allVideo()
+    {
+        $videos = Video::latest()->paginate(9); // 9 vidéos par page par exemple
+        return view('fronts.video.index', compact('videos'));
+    }
+
+    public function show($id)
+    {
+        $video = Video::findOrFail($id);
+        return view('fronts.video.show', compact('video'));
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EvenementController;
 use App\Http\Controllers\GalerieController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VideoController;
@@ -15,6 +16,11 @@ Route::resource('centres', CentreController::class);
 Route::resource('evenements', \App\Http\Controllers\EvenementController::class);
 Route::resource('galeries', GalerieController::class);
 Route::resource('videos', VideoController::class);
+
+
+Route::get('/evenement', [EvenementController::class, 'allEvent'])->name('evenements.all');
+Route::get('/video', [VideoController::class, 'allVideo'])->name('videos.all');
+
 
 
 Route::get('/dashboard', function () {

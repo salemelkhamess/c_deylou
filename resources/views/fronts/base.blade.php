@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CDPES</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600&display=swap" rel="stylesheet">
@@ -41,7 +41,15 @@
             font-family: 'Tajawal', sans-serif;
         }
 
+        .carousel-inner img {
+            height: 250px; /* par exemple */
+            object-fit: fill;
+        }
 
+        .carousel-caption h5,
+        .carousel-caption p {
+            color: black; /* Texte en noir */
+        }
 
     </style>
 
@@ -50,10 +58,51 @@
 
 
 </head>
-<body>
+<body style="background-color: #82efef">
 @include('fronts.nav')
 
+
 <div class="container mt-4">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="{{ asset('assets/img/de.jpeg') }}" alt="First slide">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>مركز ديلول</h5>
+                    <p>تعريف مركز ديلول مركز ديلول للدراسات والبحوث الاستراتيجية هو مؤسسة فكرية مستقلة، يقودها نخبة من الضباط السابقين والخبراء المدنيين، وقد تم ترخيصه رسميًا بتاريخ 03 يونيو 2024 تحت رقم fA 010000242805202408687.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="{{ asset('assets/img/de.jpeg') }}" alt="Second slide">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>مركز ديلول</h5>
+                    <p>تأسس المركز استجابة لحاجة ملحة إلى بلورة رؤى استراتيجية تُعلي من شأن الدولة وتعيد الاعتبار للبعد الوطني، في بيئة تتشابك فيها التحديات الداخلية بالتحولات الإقليمية والدولية. ويتخذ من التحليل العميق والمقاربة متعددة الأبعاد أدواتٍ لفهم الواقع واستشراف المستقبل، ضمن منظور يعزز الأمن والتنمية والاستقرار.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="{{ asset('assets/img/de.jpeg') }}" alt="Third slide">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>مركز ديلول</h5>
+                    <p>ويعمل المركز على تحقيق جملة من الأهداف الاستراتيجية، من أبرزها: ردم الفجوات النفسية والاجتماعية بين مكونات الشعب الموريتاني، وتعزيز ثقافة الانتماء للوطن الجامع بعيدًا عن مظاهر التشرذم والانقسام. تعزيز التقارب الإقليمي بين نُظُم الأعضاء، انطلاقًا من منطق التعاون والتكامل لا التنازع والتنافس، بما يخدم المصلحة الجماعية ويؤسس لتنمية مستدامة. ترسيخ ثقافة السلم والسلام في المنطقة والعالم، من خلال النقاش وتبادل الآراء بين الخبراء وأصحاب الفكر والرأي، تأكيدًا على أن السلام هو الأساس لأي نهضة أو استقرار. بناء منصة تفكير مستقلة ومسؤولة تُسهم في صناعة القرار الاستراتيجي، وترسيخ مفاهيم التكامل بين الدولة والمجتمع، والأمن والتنمية، في أفق إنساني مشترك. يسعى مركز ديلول لأن يكون مرجعًا موثوقًا في مجاله، وجسرًا يربط بين النخب وصنّاع القرار، وبين الحاضر الطموح والمستقبل الممك</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Précédent</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Suivant</span>
+        </button>
+    </div>
+
     @yield('content')
 </div>
 
@@ -92,11 +141,20 @@
         </div>
     </div>
 </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     AOS.init();
+    var myCarousel = document.querySelector('#carouselExampleIndicators');
+    var carousel = new bootstrap.Carousel(myCarousel, {
+        interval: 2000, // temps entre slides (2 secondes ici)
+        wrap: true      // permet de boucler à la fin
+    });
+
 </script>
 
 </body>
