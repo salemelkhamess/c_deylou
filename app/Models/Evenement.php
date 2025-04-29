@@ -11,10 +11,16 @@ class Evenement extends Model
 
     protected $fillable = [
         'titre',
+        'titre_ar',
+        'titre_en',
         'description',
+        'description_ar',
+        'description_en',
         'date_evenement',
         'image',
     ];
+
+
     protected $casts = [
         'date_evenement' => 'date',
     ];

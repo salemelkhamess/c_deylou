@@ -1,0 +1,27 @@
+<?php
+return [
+    'centre_name' => 'Centre Deyloul pour les études Stratégiques',
+    'events' => 'Événements',
+    'gallery' => 'Galerie',
+    'videos' => 'Vidéos',
+    'events_header' => 'Nos Événements',
+    'events_subheader' => 'Explorez nos événements passés et à venir. Découvrez des moments inoubliables et des expériences enrichissantes.',
+    'view_detail' => 'Voir Détail',
+    'event_detail' => 'Détail du',
+    'back' => '← Retour',
+    'welcome_videos_gallery' => 'Bienvenue dans notre Galerie de Vidéos',
+    'welcome_videos_subheader' => 'Découvrez une collection diversifiée de vidéos passionnantes, informatives et divertissantes. Explorez les vidéos et plongez dans des expériences uniques!',
+    'all_videos' => 'Toutes nos Vidéos',
+    'videos_section_title' => 'Vidéos',
+    'browser_not_support_video' => 'Votre navigateur ne supporte pas la balise vidéo.',
+    'video_detail' => 'Détail de la vidéo',
+    'back_to_list' => '← Retour à la liste',
+    'our_events' => 'Nos Événements',
+    'see_more' => 'Voir plus',
+    'view_all_events' => 'Voir tous les événements',
+    'gallery_photo' => 'Photo de la galerie',
+    'view_all_videos' => 'Voir toutes les vidéos',
+    'image_centre_alt' => 'Image du centre',
+    'all_r' => 'Tous droits réservés',
+
+];

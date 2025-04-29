@@ -33,7 +33,7 @@
             </div>
             <div class="card-body">
 
-                <form action="{{ route('centres.store') }}" method="POST">
+                <form action="{{ route('centres.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @include('centres.form')
                     <button type="submit" class="btn btn-success">Enregistrer</button>

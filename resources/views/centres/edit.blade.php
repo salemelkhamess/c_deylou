@@ -15,7 +15,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('centres.update', $centre) }}" method="POST">
+        <form action="{{ route('centres.update', $centre) }}" method="POST" enctype="multipart/form-data">
             @csrf @method('PUT')
             @include('centres.form')
             <button type="submit" class="btn btn-success">Mettre à jour</button>

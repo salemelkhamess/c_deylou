@@ -23,40 +23,69 @@
             </div>
         @endif
 
-        <form action="{{ route('videos.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+      <div class="card">
+          <div class="card-body">
+              <form action="{{ route('videos.store') }}" method="POST" enctype="multipart/form-data">
+                  @csrf
 
-            <div class="form-group">
-                <label>Titre</label>
-                <input type="text" name="titre" class="form-control" required>
-            </div>
+                  <div class="form-group">
+                      <label>Titre (Français)</label>
+                      <input type="text" name="titre" class="form-control" value="{{ old('titre') }}" required>
+                  </div>
 
-            <div class="form-group">
-                <label>Type</label>
-                <select name="type" class="form-control" required onchange="toggleInput(this.value)">
-                    <option value="">Choisir...</option>
-                    <option value="upload">Fichier local</option>
-                    <option value="youtube">YouTube</option>
-                </select>
-            </div>
+                  <div class="form-group">
+                      <label>Titre (Arabe)</label>
+                      <input type="text" name="titre_ar" class="form-control" value="{{ old('titre_ar') }}">
+                  </div>
 
-            <div class="form-group" id="youtubeInput" style="display:none;">
-                <label>Lien YouTube</label>
-                <input type="text" name="video_path" class="form-control">
-            </div>
+                  <div class="form-group">
+                      <label>Titre (Anglais)</label>
+                      <input type="text" name="titre_en" class="form-control" value="{{ old('titre_en') }}">
+                  </div>
 
-            <div class="form-group" id="uploadInput" style="display:none;">
-                <label>Fichier vidéo</label>
-                <input type="file" name="video_path" class="form-control-file">
-            </div>
 
-            <div class="form-group">
-                <label>Description</label>
-                <textarea name="description" class="form-control"></textarea>
-            </div>
 
-            <button class="btn btn-success">Enregistrer</button>
-        </form>
+                  <div class="form-group">
+                      <label>Type</label>
+                      <select name="type" class="form-control" required onchange="toggleInput(this.value)">
+                          <option value="">Choisir...</option>
+                          <option value="upload" {{ old('type') == 'upload' ? 'selected' : '' }}>Fichier local</option>
+                          <option value="youtube" {{ old('type') == 'youtube' ? 'selected' : '' }}>YouTube</option>
+                      </select>
+                  </div>
+
+                  <div class="form-group" id="youtubeInput" style="display:none;">
+                      <label>Lien YouTube</label>
+                      <input type="text" name="video_path" class="form-control" value="{{ old('video_path') }}">
+                  </div>
+
+                  <div class="form-group" id="uploadInput" style="display:none;">
+                      <label>Fichier vidéo</label>
+                      <input type="file" name="video_path" class="form-control-file">
+                  </div>
+
+                  <div class="form-group">
+                      <label>Description (Français)</label>
+                      <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+                  </div>
+
+                  <div class="form-group">
+                      <label>Description (Arabe)</label>
+                      <textarea name="description_ar" class="form-control">{{ old('description_ar') }}</textarea>
+                  </div>
+
+                  <div class="form-group">
+                      <label>Description (Anglais)</label>
+                      <textarea name="description_en" class="form-control">{{ old('description_en') }}</textarea>
+                  </div>
+
+
+                  <button type="submit" class="btn btn-success">Enregistrer</button>
+              </form>
+
+          </div>
+      </div>
+
     </div>
 
     <script>
@@ -72,5 +101,8 @@
                 document.getElementById('youtubeInput').style.display = 'none';
             }
         }
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleInput("{{ old('type') }}");
+        });
     </script>
 @endsection

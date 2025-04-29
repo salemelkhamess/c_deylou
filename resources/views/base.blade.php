@@ -36,27 +36,10 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 
-{{--
-
-
-    <!-- DataTables -->
-        <link rel="stylesheet" href="{{asset('assets')}}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" href="{{asset('assets')}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-        <link rel="stylesheet" href="{{asset('assets')}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-
-       <!-- DataTables -->
-       <link rel="stylesheet" href="{{asset('assets')}}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" href="{{asset('assets')}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-        <link rel="stylesheet" href="{{asset('assets')}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
---}}
 
 
         @yield('styles')
 
-{{--    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->--}}
-{{--    <!--[if lt IE 9]>--}}
-{{--    <script src="{{asset('assets')}}/js/html5shiv.min.js"></script>--}}
-{{--    <script src="{{asset('assets')}}/js/respond.min.js"></script>--}}
     <![endif]-->
 </head>
 
@@ -78,18 +61,6 @@
         <!-- Page Content -->
         <div class="content container-fluid">
 
-            <!-- Page Header -->
-{{--            <div class="page-header">--}}
-{{--                <div class="row">--}}
-{{--                    <div class="col-sm-12">--}}
-{{--                        <h3 class="page-title">Welcome Admin!</h3>--}}
-{{--                        <ul class="breadcrumb">--}}
-{{--                            <li class="breadcrumb-item active">Dashboard</li>--}}
-{{--                        </ul>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-            <!-- /Page Header -->
 
             @yield('content')
 

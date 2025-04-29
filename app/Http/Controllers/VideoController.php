@@ -23,9 +23,13 @@ class VideoController extends Controller
     {
         $request->validate([
             'titre' => 'required|string|max:255',
+            'titre_ar' => 'nullable|string|max:255',
+            'titre_en' => 'nullable|string|max:255',
             'type' => 'required|in:upload,youtube',
             'video_path' => 'required',
             'description' => 'nullable|string',
+            'description_ar' => 'nullable|string',
+            'description_en' => 'nullable|string',
         ]);
 
         $path = '';
@@ -38,26 +42,31 @@ class VideoController extends Controller
 
         Video::create([
             'titre' => $request->titre,
+            'titre_ar' => $request->titre_ar,
+            'titre_en' => $request->titre_en,
             'type' => $request->type,
             'video_path' => $path,
             'description' => $request->description,
+            'description_ar' => $request->description_ar,
+            'description_en' => $request->description_en,
         ]);
 
         return redirect()->route('videos.index')->with('success', 'Vidéo ajoutée avec succès.');
-    }
-
-    public function edit(Video $video)
-    {
-        return view('videos.edit', compact('video'));
     }
 
     public function update(Request $request, Video $video)
     {
         $request->validate([
             'titre' => 'required|string|max:255',
+            'titre_ar' => 'nullable|string|max:255',
             'type' => 'required|in:upload,youtube',
             'video_path' => $request->type === 'upload' ? 'nullable|file|mimes:mp4,mov,avi' : 'required|string',
             'description' => 'nullable|string',
+            'description_ar' => 'nullable|string',
+            'titre_en' => 'nullable|string|max:255',
+            'description_en' => 'nullable|string',
+
+
         ]);
 
         if ($request->type === 'upload' && $request->hasFile('video_path')) {
@@ -70,13 +79,22 @@ class VideoController extends Controller
         }
 
         $video->titre = $request->titre;
+        $video->titre_ar = $request->titre_ar;
         $video->type = $request->type;
         $video->description = $request->description;
+        $video->description_ar = $request->description_ar;
+        $video->titre_en = $request->titre_en;
+        $video->description_en = $request->description_en;
+
+
         $video->save();
 
         return redirect()->route('videos.index')->with('success', 'Vidéo modifiée avec succès.');
     }
-
+    public function edit(Video $video)
+    {
+        return view('videos.edit', compact('video'));
+    }
     public function destroy(Video $video)
     {
         if ($video->type === 'upload') {

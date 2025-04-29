@@ -34,23 +34,39 @@
 @endsection
 
 @section('content')
+    @php
+        $locale = app()->getLocale();
+        $titre = $locale === 'ar' ? $video->titre_ar : ($locale === 'en' ? $video->titre_en : $video->titre);
+        $description = $locale === 'ar' ? $video->description_ar : ($locale === 'en' ? $video->description_en : $video->description);
+    @endphp
+
     <div class="container py-5" style="margin-top: 80px;">
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <!-- Card container -->
                 <div class="card video-card">
                     <div class="card-header">
-                        Détail de la vidéo
+                        {{ __('messages.video_detail') }}
                     </div>
                     <div class="card-body">
-                        <video class="video-player mb-4" controls>
-                            <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <h2 class="mb-3 text-teal">{{ $video->titre }}</h2>
-                        <p class="text-muted">{{ $video->description }}</p>
+                        <!-- Affichage de la vidéo -->
+                        @if($video->type === 'youtube')
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="{{ $video->video_path }}" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        @else
+                            <video class="video-player mb-4" controls>
+                                <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
+                                {{ __('messages.browser_not_support_video') }}
+                            </video>
+                        @endif
 
-                        <a href="{{ route('videos.all') }}" class="btn btn-outline-teal mt-4">← Retour à la liste</a>
+                        <!-- Titre et description -->
+                        <h2 class="mb-3 text-teal">{{ $titre }}</h2>
+                        <p class="text-muted">{{ $description }}</p>
+
+                        <!-- Bouton retour à la liste -->
+                        <a href="{{ route('videos.all') }}" class="btn btn-outline-teal mt-4">{{ __('messages.back_to_list') }}</a>
                     </div>
                 </div>
             </div>

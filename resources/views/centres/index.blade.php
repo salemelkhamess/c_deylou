@@ -39,26 +39,31 @@
 								<div class="card-body">
                                 <div class="table-responsive">
 
-
                                     <table class="table mt-3">
                                         <thead>
                                         <tr>
+                                            <th>Logo</th> <!-- Ajout colonne logo -->
                                             <th>Nom</th>
                                             <th>Email</th>
                                             <th>Téléphone</th>
-                                            <th>Adrresse</th>
-
+                                            <th>Adresse</th>
                                             <th>Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($centres as $centre)
                                             <tr>
+                                                <td>
+                                                    @if($centre->logo)
+                                                        <img src="{{ asset('storage/' . $centre->logo) }}" alt="Logo" width="60" height="60" style="object-fit: cover; border-radius: 8px;">
+                                                    @else
+                                                        <span class="text-muted">Pas de logo</span>
+                                                    @endif
+                                                </td>
                                                 <td>{{ $centre->nom }}</td>
                                                 <td>{{ $centre->email }}</td>
                                                 <td>{{ $centre->telephone }}</td>
                                                 <td>{{ $centre->adresse }}</td>
-
                                                 <td>
                                                     <a href="{{ route('centres.edit', $centre) }}" class="btn btn-info btn-sm">Éditer</a>
                                                     <form action="{{ route('centres.destroy', $centre) }}" method="POST" style="display:inline;">

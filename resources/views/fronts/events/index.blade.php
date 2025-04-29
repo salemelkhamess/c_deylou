@@ -20,7 +20,7 @@
             border-top-right-radius: 15px;
         }
         .btn-detail {
-            background-color: #14b8a6;
+            background-color: #cfc3db;
             color: white;
             border-radius: 20px;
             font-weight: bold;
@@ -28,7 +28,7 @@
             padding: 8px 20px;
         }
         .btn-detail:hover {
-            background-color: #0d9488;
+            background-color: #cfc3db;
         }
         .card-body {
             display: flex;
@@ -57,17 +57,17 @@
             text-decoration: none;
         }
         .pagination .page-item.active .page-link {
-            background-color: #14b8a6;
-            border-color: #14b8a6;
+            background-color: #cfc3db;
+            border-color: #cfc3db;
         }
         .pagination .page-link {
-            color: #14b8a6;
+            color: #cfc3db;
             border: none;
             font-weight: bold;
         }
 
         .event-header {
-            background-color: #14b8a6;
+            background-color: #cfc3db;
             color: white;
             padding: 40px 20px;
             border-radius: 10px;
@@ -98,13 +98,13 @@
             border-top-right-radius: 15px;
         }
         .btn-detail {
-            background-color: #14b8a6;
+            background-color: #cfc3db;
             color: white;
             border-radius: 20px;
             transition: background-color 0.3s ease;
         }
         .btn-detail:hover {
-            background-color: #0d9488;
+            background-color: #cfc3db;
         }
     </style>
 @endsection
@@ -113,26 +113,33 @@
     <div class="container py-5" style="margin-top: 80px;">
         <!-- En-tête sous le carrousel -->
         <div class="event-header mb-4">
-            <h3>Nos Événements</h3>
-            <p>Explorez nos événements passés et à venir. Découvrez des moments inoubliables et des expériences enrichissantes.</p>
+            <h3>{{ __('messages.events_header') }}</h3>
+            <p>{{ __('messages.events_subheader') }}</p>
         </div>
 
         <div class="row g-4">
             @foreach($evenements as $event)
+                @php
+                    $locale = app()->getLocale();
+                    $titre = $locale == 'ar' ? $event->titre_ar : ($locale == 'en' ? $event->titre_en : $event->titre);
+                    $description = $locale == 'ar' ? $event->description_ar : ($locale == 'en' ? $event->description_en : $event->description);
+                @endphp
+
                 <div class="col-md-4" data-aos="fade-up">
                     <div class="card event-card h-100 shadow-sm">
-                        <img src="{{ asset('storage/' . $event->image) }}" class="event-img" alt="{{ $event->titre }}">
+                        <img src="{{ asset('storage/' . $event->image) }}" class="event-img" alt="{{ $titre }}">
                         <div class="card-body">
                             <p class="event-date">{{ \Carbon\Carbon::parse($event->date)->format('d M, Y') }}</p>
-                            <h5 class="event-title">{{ $event->titre }}</h5>
-                            <p class="event-description">{{ Str::limit($event->description, 120) }}</p>
+                            <h5 class="event-title">{{ $titre }}</h5>
+                            <p class="event-description">{{ Str::limit($description, 120) }}</p>
                             <div class="event-card-footer">
-                                <a href="{{ route('evenements.show', $event->id) }}" class="btn btn-detail btn-sm">Voir Détail</a>
+                                <a href="{{ route('evenements.show', $event->id) }}" class="btn btn-detail btn-sm">{{ __('messages.view_detail') }}</a>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
+
         </div>
 
         <!-- Pagination -->

@@ -4,6 +4,11 @@
 </div>
 
 <div class="form-group">
+    <label for="titre_ar">Titre (Arabe)</label>
+    <input type="text" name="titre_ar" class="form-control" value="{{ old('titre_ar', $video->titre_ar ?? '') }}">
+</div>
+
+<div class="form-group">
     <label for="type">Type</label>
     <select name="type" class="form-control" onchange="toggleVideoInput(this.value)">
         <option value="upload" {{ (old('type', $video->type ?? '') == 'upload') ? 'selected' : '' }}>Upload</option>
@@ -26,12 +31,7 @@
     <textarea name="description" class="form-control">{{ old('description', $video->description ?? '') }}</textarea>
 </div>
 
-<script>
-    function toggleVideoInput(type) {
-        document.getElementById('video_upload').style.display = type === 'upload' ? 'block' : 'none';
-        document.getElementById('video_youtube').style.display = type === 'youtube' ? 'block' : 'none';
-    }
-    document.addEventListener("DOMContentLoaded", function () {
-        toggleVideoInput("{{ old('type', $video->type ?? 'upload') }}");
-    });
-</script>
+<div class="form-group">
+    <label>Description (Arabe)</label>
+    <textarea name="description_ar" class="form-control">{{ old('description_ar', $video->description_ar ?? '') }}</textarea>
+</div>

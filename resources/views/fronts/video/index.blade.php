@@ -20,7 +20,7 @@
             border-top-right-radius: 12px;
         }
         .btn-teal {
-            background-color: #14b8a6;
+            background-color: #c0ca8a;
             color: white;
             border-radius: 20px;
             padding: 8px 20px;
@@ -28,7 +28,7 @@
             transition: background-color 0.3s ease;
         }
         .btn-teal:hover {
-            background-color: #0d9488;
+            background-color: #c0ca8a;
         }
         .card-body {
             padding: 15px;
@@ -44,11 +44,11 @@
             margin-bottom: 10px;
         }
         .pagination .page-item.active .page-link {
-            background-color: #14b8a6;
-            border-color: #14b8a6;
+            background-color: #c0ca8a;
+            border-color: #c0ca8a;
         }
         .pagination .page-link {
-            color: #14b8a6;
+            color: #c0ca8a;
             border: none;
             font-weight: bold;
         }
@@ -60,7 +60,7 @@
 
         /* Style for the header */
         .header-section {
-            background: linear-gradient(to right, #14b8a6, #0d9488);
+            background: linear-gradient(to right, #14b8a6, #c0ca8a);
             padding: 40px 0;
             color: white;
             border-radius: 10px;
@@ -80,26 +80,36 @@
     </style>
 @endsection
 
+
 @section('content')
+    @php
+        $locale = app()->getLocale();
+    @endphp
+
     <div class="container py-5" style="margin-top: 2px;">
         <!-- Header Section -->
         <div class="header-section">
-            <h2>Bienvenue dans notre Galerie de Vidéos</h2>
-            <p>Découvrez une collection diversifiée de vidéos passionnantes, informatives et divertissantes. Explorez les vidéos et plongez dans des expériences uniques!</p>
+            <h2>{{ __('messages.welcome_videos_gallery') }}</h2>
+            <p>{{ __('messages.welcome_videos_subheader') }}</p>
         </div>
 
         <!-- Videos Section -->
-        <h2 class="text-center text-teal mb-5">Toutes nos Vidéos</h2>
+        <h2 class="text-center text-teal mb-5">{{ __('messages.all_videos') }}</h2>
 
         <section id="videos" class="py-5 bg-light">
             <div class="container">
-                <h3 class="text-center mb-4 text-teal">Vidéos</h3>
+                <h3 class="text-center mb-4 text-teal">{{ __('messages.videos_section_title') }}</h3>
                 <div class="row g-4">
                     @foreach($videos as $video)
+                        @php
+                            $titre = $locale == 'ar' ? $video->titre_ar : ($locale == 'en' ? $video->titre_en : $video->titre);
+                            $description = $locale == 'ar' ? $video->description_ar : ($locale == 'en' ? $video->description_en : $video->description);
+                        @endphp
+
                         <div class="col-md-6" data-aos="flip-left">
                             <div class="card h-100 shadow-sm border-0">
                                 <div class="card-body">
-                                    <h5 class="card-title text-teal">{{ $video->titre }}</h5>
+                                    <h5 class="card-title text-teal">{{ $titre }}</h5>
 
                                     @if($video->type === 'youtube')
                                         <div class="ratio ratio-16x9">
@@ -108,14 +118,14 @@
                                     @else
                                         <video controls class="w-100 rounded">
                                             <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
-                                            Your browser does not support the video tag.
+                                            {{ __('messages.browser_not_support_video') }}
                                         </video>
                                     @endif
 
-                                    <p class="mt-2 text-muted">{{ Str::limit($video->description, 100) }}</p>
+                                    <p class="mt-2 text-muted">{{ Str::limit($description, 100) }}</p>
                                 </div>
                                 <div class="card-footer bg-transparent border-0 text-end">
-                                    <a href="{{ route('videos.show', $video->id) }}" class="btn btn-teal btn-sm">Voir Détail</a>
+                                    <a href="{{ route('videos.show', $video->id) }}" class="btn btn-teal btn-sm">{{ __('messages.view_detail') }}</a>
                                 </div>
                             </div>
                         </div>
@@ -128,10 +138,5 @@
                 </div>
             </div>
         </section>
-
-        <!-- Pagination -->
-        <div class="mt-5 d-flex justify-content-center">
-            {{ $videos->links('pagination::bootstrap-5') }}
-        </div>
     </div>
 @endsection

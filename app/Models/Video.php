@@ -11,8 +11,13 @@ class Video extends Model
 
     protected $fillable = [
         'titre',
+        'titre_ar',
+        'titre_en',
         'type',
         'video_path',
         'description',
+        'description_ar',
+        'description_en',
     ];
+
 }

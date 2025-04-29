@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,8 +16,9 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/de.jpeg') }}">
 
     <style>
+
         .gallery img:hover { transform: scale(1.05); transition: .3s; }
-        .carousel-item img { height: 500px; object-fit: cover; }
+        .carousel-item img { height: 500px; object-fit: fill; }
 
         html {
             scroll-behavior: smooth;
@@ -51,6 +52,36 @@
             color: black; /* Texte en noir */
         }
 
+        .carousel-inner {
+            position: relative;
+        }
+
+        .carousel-image {
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            height: 500px; /* Ajustez la hauteur selon vos besoins */
+        }
+
+        .carousel-caption {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.6); /* Fond sombre transparent */
+        }
+
+        .text-overlay h5, .text-overlay p {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Ombre pour rendre le texte plus visible */
+        }
+
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            background-color: rgba(0, 0, 0, 0.5); /* Icones de contrôle plus visibles */
+        }
+
     </style>
 
     @yield('styles')
@@ -58,48 +89,47 @@
 
 
 </head>
-<body style="background-color: #82efef">
+<body style="background: linear-gradient(to right, #e9eec1, #c0ca8a ,#b4b6cc);">
 @include('fronts.nav')
 
 
 <div class="container mt-4">
+
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            @foreach(\App\Models\Carousel::all() as $index => $slide)
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active' : '' }}" aria-current="{{ $index == 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}"></button>
+            @endforeach
         </div>
 
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="{{ asset('assets/img/de.jpeg') }}" alt="First slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>مركز ديلول</h5>
-                    <p>تعريف مركز ديلول مركز ديلول للدراسات والبحوث الاستراتيجية هو مؤسسة فكرية مستقلة، يقودها نخبة من الضباط السابقين والخبراء المدنيين، وقد تم ترخيصه رسميًا بتاريخ 03 يونيو 2024 تحت رقم fA 010000242805202408687.</p>
+            @foreach(\App\Models\Carousel::all() as $index => $slide)
+                @php
+                    $locale = app()->getLocale();
+                    $titre = $locale === 'ar' ? $slide->title_ar : ($locale === 'en' ? $slide->title_en : $slide->title_fr);
+                    $description = $locale === 'ar' ? $slide->description_ar : ($locale === 'en' ? $slide->description_en : $slide->description_fr);
+                    $direction = $locale === 'ar' ? 'rtl' : 'ltr';
+                    $textAlign = $locale === 'ar' ? 'right' : 'left';
+                @endphp
+
+                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                    <div class="carousel-image" style="background-image: url('{{ asset('storage/' . $slide->image_path) }}');">
+                        <div class="carousel-caption d-none d-md-block text-overlay">
+                            <h5 class="text-center" style="direction: {{ $direction }}; text-align: {{ $textAlign }};">{{ $titre }}</h5>
+                            <p class="text-center" style="direction: {{ $direction }}; text-align: {{ $textAlign }};">{{ $description }}</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="{{ asset('assets/img/de.jpeg') }}" alt="Second slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>مركز ديلول</h5>
-                    <p>تأسس المركز استجابة لحاجة ملحة إلى بلورة رؤى استراتيجية تُعلي من شأن الدولة وتعيد الاعتبار للبعد الوطني، في بيئة تتشابك فيها التحديات الداخلية بالتحولات الإقليمية والدولية. ويتخذ من التحليل العميق والمقاربة متعددة الأبعاد أدواتٍ لفهم الواقع واستشراف المستقبل، ضمن منظور يعزز الأمن والتنمية والاستقرار.</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="{{ asset('assets/img/de.jpeg') }}" alt="Third slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>مركز ديلول</h5>
-                    <p>ويعمل المركز على تحقيق جملة من الأهداف الاستراتيجية، من أبرزها: ردم الفجوات النفسية والاجتماعية بين مكونات الشعب الموريتاني، وتعزيز ثقافة الانتماء للوطن الجامع بعيدًا عن مظاهر التشرذم والانقسام. تعزيز التقارب الإقليمي بين نُظُم الأعضاء، انطلاقًا من منطق التعاون والتكامل لا التنازع والتنافس، بما يخدم المصلحة الجماعية ويؤسس لتنمية مستدامة. ترسيخ ثقافة السلم والسلام في المنطقة والعالم، من خلال النقاش وتبادل الآراء بين الخبراء وأصحاب الفكر والرأي، تأكيدًا على أن السلام هو الأساس لأي نهضة أو استقرار. بناء منصة تفكير مستقلة ومسؤولة تُسهم في صناعة القرار الاستراتيجي، وترسيخ مفاهيم التكامل بين الدولة والمجتمع، والأمن والتنمية، في أفق إنساني مشترك. يسعى مركز ديلول لأن يكون مرجعًا موثوقًا في مجاله، وجسرًا يربط بين النخب وصنّاع القرار، وبين الحاضر الطموح والمستقبل الممك</p>
-                </div>
-            </div>
+            @endforeach
         </div>
+
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Précédent</span>
+            <span class="visually-hidden">{{ __('messages.previous') }}</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Suivant</span>
+            <span class="visually-hidden">{{ __('messages.next') }}</span>
         </button>
     </div>
 
@@ -109,43 +139,29 @@
 <footer class="bg-dark text-white text-center py-5 mt-5">
     <div class="container">
         <!-- Message de droits d'auteur -->
-        <p class="mb-4">&copy; {{ date('Y') }} Centre Culturel. Tous droits réservés.</p>
+        <p class="mb-4">&copy; {{ date('Y') }}
+            {{ app()->getLocale() == 'ar' ? \App\Models\Centre::find(1)->nom_ar : \App\Models\Centre::find(1)->nom }}
+            {{ __('messages.all_r') }}
+        </p>
 
         <!-- Mini navbar pour les réseaux sociaux -->
         <div class="social-icons">
-            <a href="#" class="me-3 text-white fs-4">
-                <i class="fa fa-facebook"></i>
-            </a>
-            <a href="#" class="me-3 text-white fs-4">
-                <i class="fa fa-twitter"></i>
-            </a>
-            <a href="#" class="me-3 text-white fs-4">
-                <i class="fa fa-instagram"></i>
-            </a>
-            <a href="#" class="text-white fs-4">
-                <i class="fa fa-youtube"></i>
-            </a>
+            @foreach(\App\Models\SocialLink::all() as $link)
+                <a href="{{ $link->link }}" class="me-3 text-white fs-4" target="_blank">
+                    <i class="fa fa-{{ strtolower($link->title) }}"></i>
+                </a>
+            @endforeach
         </div>
+
 
         <!-- Ligne de séparation -->
         <hr class="my-4" style="border-color: #444;">
 
-        <!-- Contact et informations supplémentaires -->
-        <div class="row">
-            <div class="col-md-6">
-                <p>Pour plus d'informations, contactez-nous à <a href="mailto:contact@centre.com" class="text-white">contact@centre.com</a></p>
-            </div>
-            <div class="col-md-6">
-                <p><a href="#" class="text-white">Politique de confidentialité</a> | <a href="#" class="text-white">Conditions d'utilisation</a></p>
-            </div>
-        </div>
+
     </div>
 </footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     AOS.init();
