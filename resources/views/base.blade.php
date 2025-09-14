@@ -8,11 +8,10 @@
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
 
-    <title>Centre</title>
+    <title>PMDP</title>
 
 
-        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/de.jpeg') }}">
-
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/l.jpeg') }}">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">

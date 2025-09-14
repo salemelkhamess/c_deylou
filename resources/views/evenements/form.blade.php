@@ -1,3 +1,16 @@
+<!-- Dans evenements/form.blade.php -->
+<div class="form-group">
+    <label for="moughataa_id">Moughataa</label>
+    <select name="moughataa_id" id="moughataa_id" class="form-control" required>
+        <option value="">Sélectionner une Moughataa</option>
+        @foreach($moughataas as $moughataa)
+            <option value="{{ $moughataa->id }}" {{ (old('moughataa_id', $evenement->moughataa_id ?? '') == $moughataa->id) ? 'selected' : '' }}>
+                {{ $moughataa->nom_fr }} ({{ $moughataa->wilaya->nom_fr }})
+            </option>
+        @endforeach
+    </select>
+</div>
+
 <div class="form-group">
     <label for="titre">Titre</label>
     <input type="text" name="titre" class="form-control" value="{{ old('titre', $evenement->titre ?? '') }}" required>

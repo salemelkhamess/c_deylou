@@ -1,6 +1,6 @@
 <?php
 return [
-    'centre_name' => 'Centre Deyloul pour les études Stratégiques',
+    'centre_name' => 'PARTI MAURITANIE DÉMOCRATIQUE DU PEUPLE',
     'events' => 'Événements',
     'gallery' => 'Galerie',
     'videos' => 'Vidéos',
@@ -23,5 +23,39 @@ return [
     'view_all_videos' => 'Voir toutes les vidéos',
     'image_centre_alt' => 'Image du centre',
     'all_r' => 'Tous droits réservés',
+
+
+    'wilaya_statistics' => 'Statistiques par Wilaya',
+    'wilaya_code' => 'Code',
+    'wilaya_name' => 'Nom de la Wilaya',
+    'population' => 'Population',
+    'participants' => 'Participants',
+    'participation_rate' => 'Taux de participation',
+    'total' => 'Total',
+    'global_statistics' => 'Statistiques Globales',
+    'total_population' => 'Population Totale',
+    'total_participants' => 'Total Participants',
+    'total_participation_rate' => 'Taux de Participation Global',
+    'search_wilaya' => 'Rechercher une wilaya...',
+
+
+    // French (resources/lang/fr/messages.php)
+    'our_leaders' => 'Nos Dirigeants',
+    'view_details' => 'Voir Détails',
+    'birth_date' => 'Date de Naissance',
+    'diplomas' => 'Diplômes',
+    'experiences' => 'Expériences',
+    'skills' => 'Compétences',
+    'present' => 'Présent',
+    'download_diploma' => 'Télécharger Diplôme',
+
+// resources/lang/fr/messages.php
+    'our_team' => 'Notre Équipe',
+    'view_profile' => 'Voir le profil',
+    'biography' => 'Biographie',
+    'bio_placeholder' => 'Informations biographiques du dirigeant...',
+    'home' => 'Accueil',
+
+
 
 ];

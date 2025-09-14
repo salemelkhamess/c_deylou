@@ -125,7 +125,7 @@
                                     <p class="mt-2 text-muted">{{ Str::limit($description, 100) }}</p>
                                 </div>
                                 <div class="card-footer bg-transparent border-0 text-end">
-                                    <a href="{{ route('videos.show', $video->id) }}" class="btn btn-teal btn-sm">{{ __('messages.view_detail') }}</a>
+                                    <a href="{{ route('video.show', $video->id) }}" class="btn btn-teal btn-sm">{{ __('messages.view_detail') }}</a>
                                 </div>
                             </div>
                         </div>

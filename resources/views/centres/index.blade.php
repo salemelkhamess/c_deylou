@@ -3,7 +3,6 @@
 @section('styles')
 
 @endsection
-
 @section('content')
 		<!-- Page Wrapper -->
                 <div class="content container-fluid">
@@ -12,27 +11,27 @@
 					<div class="page-header">
 						<div class="row">
 							<div class="col">
-								<h3 class="page-title">Centres</h3>
+								<h3 class="page-title">Partie</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="">Accueil</a></li>
-									<li class="breadcrumb-item active">Centres</li>
+									<li class="breadcrumb-item active">Partie</li>
 								</ul>
 							</div>
 						</div>
 					</div>
 					<!-- /Page Header -->
 
-<p class="text-right">
+{{--<p class="text-right">
     <a href="{{ route('centres.create') }}" class="btn btn-primary">Ajouter un centre</a><br>
 
-</p>
+</p>--}}
                     @if(session('success'))
                         <div class="alert alert-success mt-2">{{ session('success') }}</div>
                     @endif
 
 		<div class="card mb-0">
 								<div class="card-header">
-                                    <h1>Centres</h1>
+                                    <h1>Partie</h1>
                                     <p class="card-text">
 									</p>
 								</div>

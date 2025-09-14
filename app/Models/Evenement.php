@@ -18,10 +18,15 @@ class Evenement extends Model
         'description_en',
         'date_evenement',
         'image',
+        'moughataa_id'
     ];
-
 
     protected $casts = [
         'date_evenement' => 'date',
     ];
+
+    public function moughataa()
+    {
+        return $this->belongsTo(Moughataa::class);
+    }
 }

@@ -1,50 +1,62 @@
-<!-- Navbar principale blanche -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm ">
+<!-- Navbar -->
+<!-- Header with Logo -->
+<header class="main-header">
     <div class="container">
-        <a class="navbar-brand fw-bold text-teal" href="{{ route('home') }}">
-            {{ __('messages.centre_name') }}
-        </a>
+        <div class="logo-container">
+            <div class="text-center">
+                <h1 class="logo-text">PARTI MAURITANIEN DEMOCRATIQUE ET POPULAIRE</h1>
 
+                <div class="arabic-text">  <h1> الحزب الموريتاني الديمقراطي الشعبي</h1> </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark main-nav">
+    <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="mainNav">
-            <ul class="navbar-nav ms-auto align-items-center">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link fw-semibold text-dark" href="{{ route('evenements.all') }}">{{ __('messages.events') }}</a>
+                    <a class="nav-link" href="{{ route('home') }}">{{ __('messages.home') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-semibold text-dark" href="#galerie">{{ __('messages.gallery') }}</a>
+                    <a class="nav-link" href="{{ route('evenements.all') }}">{{ __('messages.events') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-semibold text-dark" href="{{ route('videos.all') }}">{{ __('messages.videos') }}</a>
+                    <a class="nav-link" href="#galerie">{{ __('messages.gallery') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('videos.all') }}">{{ __('messages.videos') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('equipe.liste') }}">{{ __('messages.our_leaders') }}</a>
                 </li>
             </ul>
 
-            <ul class="navbar-nav ms-4 align-items-center">
-
+            <ul class="navbar-nav language-selector">
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center" href="{{ route('change.language', 'ar') }}">
-                        <img src="{{ asset('assets/img/flags/mr.svg') }}" alt="عربي" width="24" class="me-1">
+                    <a class="nav-link" href="{{ route('change.language', 'ar') }}">
+                        <img src="{{ asset('assets/img/flags/mr.svg') }}" alt="عربي" width="20" class="me-1">
                         عربي
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center" href="{{ route('change.language', 'en') }}">
-                        <img src="{{ asset('assets/img/flags/us.png') }}" alt="english" width="24" class="me-1">
+                    <a class="nav-link" href="{{ route('change.language', 'en') }}">
+                        <img src="{{ asset('assets/img/flags/us.png') }}" alt="English" width="20" class="me-1">
                         English
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center" href="{{ route('change.language', 'fr') }}">
-                        <img src="{{ asset('assets/img/flags/fr.png') }}" alt="Français" width="24" class="me-1">
+                    <a class="nav-link" href="{{ route('change.language', 'fr') }}">
+                        <img src="{{ asset('assets/img/flags/fr.png') }}" alt="Français" width="20" class="me-1">
                         Français
                     </a>
                 </li>
-
-
-
             </ul>
         </div>
     </div>

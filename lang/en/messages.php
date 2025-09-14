@@ -1,6 +1,6 @@
 <?php
 return [
-    'centre_name' => 'Deyloul Center for Strategic Studies',
+    'centre_name' => 'Mauritanian Democratic People\'s Party',
     'events' => 'Events',
     'gallery' => 'Gallery',
     'videos' => 'Videos',
@@ -23,4 +23,37 @@ return [
     'view_all_videos' => 'View all videos',
     'image_centre_alt' => 'Center image',
     'all_r' => 'All rights reserved',
+
+
+    'participation_by_wilaya' => 'Participation by Wilaya',
+
+
+    'wilaya_statistics' => 'Wilaya Statistics',
+    'wilaya_code' => 'Code',
+    'wilaya_name' => 'Wilaya Name',
+    'population' => 'Population',
+    'participants' => 'Participants',
+    'participation_rate' => 'Participation Rate',
+    'total' => 'Total',
+    'global_statistics' => 'Global Statistics',
+    'total_population' => 'Total Population',
+    'total_participants' => 'Total Participants',
+    'total_participation_rate' => 'Overall Participation Rate',
+    'search_wilaya' => 'Search for a wilaya...',
+
+
+
+    // English
+    'our_leaders' => 'Our Leaders',
+    'view_details' => 'View Details',
+    'birth_date' => 'Birth Date',
+    'diplomas' => 'Diplomas',
+    'experiences' => 'Experiences',
+    'skills' => 'Skills',
+    'present' => 'Present',
+    'download_diploma' => 'Download Diploma',
+    'home' => 'Home',
+
+
+
 ];

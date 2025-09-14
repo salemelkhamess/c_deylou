@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evenement;
+use App\Models\Moughataa;
 use Illuminate\Http\Request;
 
 
@@ -17,7 +18,9 @@ class EvenementController extends Controller
 
     public function create()
     {
-        return view('evenements.create');
+        $moughataas = Moughataa::with('wilaya')->get();
+
+        return view('evenements.create' , compact('moughataas'));
     }
 
     public function store(Request $request)
@@ -73,7 +76,10 @@ class EvenementController extends Controller
 
     public function edit(Evenement $evenement)
     {
-        return view('evenements.edit', compact('evenement'));
+
+        $moughataas = Moughataa::with('wilaya')->get();
+
+        return view('evenements.edit', compact('evenement' , 'moughataas'));
     }
 
     public function show($id)

@@ -20,8 +20,32 @@
 
 
                 <li>
-                    <a href="{{ route('centres.index') }}"><i class="fa fa-building"></i> <span>Centres</span></a>
+                    <a href="{{ route('centres.index') }}"><i class="fa fa-building"></i> <span>Partie</span></a>
                 </li>
+
+                <li>
+                    <a href="{{ route('wilayas.index') }}"><i class="fa fa-building"></i> <span>Willaya</span></a>
+                </li>
+
+
+                <li>
+                    <a href="{{ route('moughataas.index') }}"><i class="fa fa-building"></i> <span>Moughataas</span></a>
+                </li>
+
+
+
+                <li>
+                    <a href="{{ route('participants.index') }}"><i class="fa fa-building"></i> <span>Participants</span></a>
+                </li>
+
+                <li>
+                    <a href="{{ route('dirigeants.index') }}"><i class="fa fa-building"></i> <span>Dirigants</span></a>
+                </li>
+
+                <li>
+                    <a href="{{ route('questions.index') }}"><i class="fa fa-building"></i> <span>Questions</span></a>
+                </li>
+
 
                 <li>
                     <a href="{{ route('evenements.index') }}"><i class="fa fa-calendar-o"></i> <span>Événements</span></a>

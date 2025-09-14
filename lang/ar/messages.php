@@ -1,6 +1,7 @@
 <?php
 return [
-    'centre_name' => 'مركز ديليل للدراسات الاستراتيجية',
+    'centre_name' => '   الحزب الموريتاني الشعبي الديمقراطي
+',
     'events' => 'الفعاليات',
     'gallery' => 'معرض الصور',
     'videos' => 'مقاطع الفيديو',
@@ -25,5 +26,37 @@ return [
     'view_all_videos' => 'عرض جميع مقاطع الفيديو',
     'image_centre_alt' => 'صورة المركز',
     'all_r' => 'جميع الحقوق محفوظة  ',
+
+
+    'wilaya_statistics' => 'إحصائيات الولايات',
+    'wilaya_code' => 'الرمز',
+    'wilaya_name' => 'اسم الولاية',
+    'population' => 'عدد السكان',
+    'participants' => 'عدد المشاركين',
+    'participation_rate' => 'نسبة المشاركة',
+    'total' => 'المجموع',
+    'global_statistics' => 'الإحصائيات العامة',
+    'total_population' => 'إجمالي السكان',
+    'total_participants' => 'إجمالي المشاركين',
+    'total_participation_rate' => 'نسبة المشاركة الإجمالية',
+    'search_wila',
+
+
+    // Arabic (resources/lang/ar/messages.php)
+    'our_leaders' => 'قيادتنا',
+    'view_details' => 'عرض التفاصيل',
+    'birth_date' => 'تاريخ الميلاد',
+    'diplomas' => 'الشهادات',
+    'experiences' => 'الخبرات',
+    'skills' => 'المهارات',
+    'present' => 'حالي',
+    'download_diploma' => 'تحميل الشهادة',
+
+    // resources/lang/ar/messages.php
+    'our_team' => 'فريقنا',
+    'view_profile' => 'عرض الملف',
+    'biography' => 'السيرة الذاتية',
+    'bio_placeholder' => 'معلومات السيرة الذاتية للقائد...',
+    'home' => 'الصفحة الرئيسية',
 
 ];
