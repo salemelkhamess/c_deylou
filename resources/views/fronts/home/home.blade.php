@@ -14,53 +14,16 @@
             --shadow: rgba(0, 0, 0, 0.15);
         }
 
-        .header-section {
-            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--medium-blue) 100%);
-            color: var(--white);
-            padding: 40px 0;
-            margin-bottom: 30px;
-            border-bottom: 4px solid var(--gold);
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 4px 20px var(--shadow);
-        }
-
-        .header-title {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-            font-family: 'Playfair Display', serif;
-        }
-
-        .header-subtitle {
-            font-size: 1.3rem;
-            opacity: 0.9;
-            max-width: 800px;
-            margin: 0 auto;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        /* Map container */
-        .map-container {
+        /* Map styles */
+        #map {
             width: 100%;
-            max-width: 1500px;
             height: 750px;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 12px 40px var(--shadow);
             margin: 40px auto;
             position: relative;
-            background: var(--light-gray);
+            background: white;
             transition: all 0.3s ease;
-        }
-
-        #map {
-            width: 100% !important;
-            height: 100% !important;
             z-index: 0;
             cursor: pointer !important;
-            background: #e0e7ff;
-            transition: transform 0.3s ease;
         }
 
         #map:hover {
@@ -97,7 +60,7 @@
             font-size: 15px;
             white-space: normal;
             transition: opacity 0.3s ease, transform 0.3s ease;
-            min-width: 300px; /* Agrandi la largeur du tooltip */
+            min-width: 300px;
         }
 
         .custom-tooltip h6 {
@@ -179,30 +142,6 @@
             font-family: 'Roboto', sans-serif;
             letter-spacing: 0.6px;
             transition: opacity 0.3s ease;
-        }
-
-        /* Current wilaya display */
-        .current-wilaya-display {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 12px 25px;
-            border-radius: 10px;
-            box-shadow: 0 3px 15px var(--shadow);
-            font-weight: 700;
-            color: var(--deep-blue);
-            text-align: center;
-            min-width: 280px;
-            font-family: 'Playfair Display', serif;
-            font-size: 16px;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        .current-wilaya-display:hover {
-            transform: translateX(-50%) translateY(-5px);
         }
 
         /* Progress indicator */
@@ -288,28 +227,13 @@
     </div>
 
     <!-- Interactive Map of Mauritania -->
-    <section class="container mb-5">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="elegant-card">
-                    <div class="elegant-card-header text-center">
-                        <i class="fas fa-map-marked-alt me-2"></i>
-                        Carte Interactive des Résultats
-                    </div>
-                    <div class="elegant-card-body p-0 position-relative">
-                        <div class="map-container">
-                            <div id="map"></div>
-
-                            <div class="progress-indicator" id="progressIndicator">
-                                Wilaya 1 sur {{ count($wilayas) }}
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div id="map"></div>
+    <div class="progress-indicator" id="progressIndicator">
+        Wilaya 1 sur {{ count($wilayas) }}
+    </div>
+    <div class="pause-indicator" id="pauseIndicator">
+        Animation Pausée
+    </div>
 
     <!-- Voting Section -->
     <div class="row mt-5">
@@ -558,7 +482,7 @@
                     const buttons = tooltipElement.querySelectorAll('button');
                     buttons.forEach(button => {
                         button.addEventListener('click', function(e) {
-                            e.stopPropagation(); // Empêcher la propagation du événement
+                            e.stopPropagation();
                             const wilayaId = this.getAttribute('onclick').match(/\d+/)[0];
                             window.openWilayaDetails(wilayaId);
                         });

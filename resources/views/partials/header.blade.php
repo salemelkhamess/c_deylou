@@ -4,7 +4,7 @@
     <div class="header-left">
         <a href="" class="logo">
 {{--            <img src="{{asset('assets/img/AA+.svg')}}" width="40" height="40" alt="">--}}
-Booking app        </a>
+PMDP        </a>
     </div>
     <!-- /Logo -->
 
