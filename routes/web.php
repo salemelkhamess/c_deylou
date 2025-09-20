@@ -32,8 +32,11 @@ Route::get('/video', [VideoController::class, 'allVideo'])->name('videos.all');
 Route::get('/video/show/{id}', [VideoController::class, 'show'])->name('video.show');
 Route::get('/evenement/show/{id}', [EvenementController::class, 'show'])->name('evenement.show');
 Route::get('/wilaya/{wilaya}/moughataas', [App\Http\Controllers\MoughataaController::class, 'byWilaya'])->name('moughataas.by_wilaya');
+Route::get('/api/wilaya/{wilaya}/moughataas', [MoughataaController::class, 'getByWilayaApi'])->name('api.wilaya.moughataas');
 
 
+Route::get('/moughataas/{id}/events', [MoughataaController::class, 'eventByMoughataa'])
+    ->name('moughataas.events');
 
 // Routes pour le front-end
 Route::prefix('equipe')->group(function() {

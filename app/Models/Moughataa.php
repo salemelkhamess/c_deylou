@@ -28,6 +28,8 @@ class Moughataa extends Model
         return $this->hasMany(Evenement::class);
     }
 
+
+
     public function participants()
     {
         return $this->hasMany(Participant::class);

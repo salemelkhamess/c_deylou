@@ -76,12 +76,58 @@ class MoughataaController extends Controller
 
     public function byWilaya(Wilaya $wilaya)
     {
-        // Récupérer simplement les moughataas de la wilaya sans les participants
-        $moughataas = Moughataa::where('wilaya_id', $wilaya->id)
+        // Charger les moughataas avec leurs événements
+        $moughataas = Moughataa::where('id', $wilaya->id)
+            ->with('evenements') // eager load
             ->orderBy('nom_fr')
             ->get();
 
+
         return view('moughataas.by_wilaya', compact('wilaya', 'moughataas'));
+    }
+
+
+    public function eventByMoughataa($id)
+    {
+        // Charger UNE seule moughataa avec ses événements
+        $moughataa = Moughataa::with('evenements')
+            ->findOrFail($id);
+
+        return view('moughataas.by_wilaya', compact('moughataa'));
+    }
+
+
+    public function getByWilayaApi(Wilaya $wilaya)
+    {
+        $moughataas = Moughataa::where('wilaya_id', $wilaya->id)
+            ->orderBy('nom_fr')
+            ->get()
+            ->map(function ($moughataa) {
+                // Comme il n'y a pas de relation directe entre Moughataa et Participant,
+                // nous devons calculer manuellement le nombre de participants
+                // Note: Cette approche peut être inefficace pour de grandes quantités de données
+                $participantsCount = 0;
+
+                return [
+                    'id' => $moughataa->id,
+                    'nom_fr' => $moughataa->nom_fr,
+                    'nom_ar' => $moughataa->nom_ar,
+                    'code' => $moughataa->code,
+                    'population' => $moughataa->population,
+                    'participants_count' => $participantsCount,
+                    'participation_rate' => $moughataa->population > 0 ?
+                        ($participantsCount / $moughataa->population) * 100 : 0
+                ];
+            });
+
+        return response()->json([
+            'wilaya' => [
+                'id' => $wilaya->id,
+                'nom_fr' => $wilaya->nom_fr,
+                'nom_ar' => $wilaya->nom_ar
+            ],
+            'moughataas' => $moughataas
+        ]);
     }
 
 }

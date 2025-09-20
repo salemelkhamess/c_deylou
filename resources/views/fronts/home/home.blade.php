@@ -183,6 +183,39 @@
             font-size: 16px;
             display: none;
         }
+
+        /* Nouveaux styles pour le panneau des Moughataas */
+
+        .moughataas-circle {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            position: relative;
+            margin: 60px auto 0 auto;
+            background: #ccc;
+            display: none;
+        }
+        .moughataas-circle.show {
+            display: block;
+        }
+        .moughataa-label {
+            position: absolute;
+            width: 80px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #fff;
+            transform-origin: center center;
+            cursor: pointer;
+        }
+        .moughataa-label span {
+            display: inline-block;
+            padding: 2px 4px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 4px;
+        }
+
+
     </style>
 @endsection
 
@@ -226,20 +259,29 @@
         </button>
     </div>
 
-    <!-- Interactive Map of Mauritania -->
-    <div id="map"></div>
-    <div class="progress-indicator" id="progressIndicator">
-        Wilaya 1 sur {{ count($wilayas) }}
-    </div>
-    <div class="pause-indicator" id="pauseIndicator">
-        Animation Pausée
+    <!-- Map and Moughataas Panel -->
+    <div class="row mt-5">
+        <div class="col-lg-8">
+            <!-- Interactive Map of Mauritania -->
+            <div id="map"></div>
+            <div class="progress-indicator" id="progressIndicator">
+                Wilaya 1 sur {{ count($wilayas) }}
+            </div>
+            <div class="pause-indicator" id="pauseIndicator">
+                Animation Pausée
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="moughataas-circle" id="moughataasCircle"></div>
+
+
+        </div>
     </div>
 
     <!-- Voting Section -->
     <div class="row mt-5">
         <div class="col-md-12">
-            <h1 class="text-center mb-5">Questions de Vote</h1>
-
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
@@ -382,6 +424,14 @@
             let animationInterval;
             let currentTooltip = null;
             let isAnimationPaused = false;
+            let moughataaLayers = []; // To store moughataa circle markers
+
+            // Color palette for moughataas
+            const moughataaColors = [
+                '#ff6b6b', '#4ecdc4', '#45b7d1', '#96c93d',
+                '#ff9f43', '#d64161', '#6c5ce7', '#00b894',
+                '#e84393', '#0984e3', '#a29bfe', '#fdcb6e'
+            ];
 
             function getColorByRate(rate) {
                 return rate > 50 ? '#38a169' :
@@ -423,6 +473,10 @@
                         fillOpacity: 0.7
                     });
                 });
+
+                // Clear moughataa layers when switching wilayas
+                moughataaLayers.forEach(layer => map.removeLayer(layer));
+                moughataaLayers = [];
             }
 
             function highlightWilaya(layer) {
@@ -450,11 +504,10 @@
                         <b>Taux:</b> ${rate}%<br><br>
                     `;
 
-                    // Ajouter le lien vers les détails des Moughataa
-                    if (wilayaId && moughataasByWilaya[wilayaId]) {
+                    if (wilayaId) {
                         tooltipContent += `
                             <div style="text-align: center; margin-top: 10px;">
-                                <button onclick="window.openWilayaDetails(${wilayaId})"
+                                <button onclick="window.openMoughataasPanel(${wilayaId})"
                                    class="btn btn-primary btn-sm"
                                    style="background-color: var(--deep-blue); border: none; padding: 5px 15px; border-radius: 5px; color: white; cursor: pointer;">
                                     Voir les Moughataa
@@ -473,18 +526,15 @@
                     className: 'custom-tooltip'
                 }).setContent(tooltipContent).setLatLng(layer.getBounds().getCenter()).addTo(map);
 
-                // Rendre le tooltip cliquable
                 const tooltipElement = currentTooltip.getElement();
                 if (tooltipElement) {
                     tooltipElement.style.pointerEvents = 'auto';
-
-                    // Ajouter un gestionnaire d'événements pour les clics sur les boutons
                     const buttons = tooltipElement.querySelectorAll('button');
                     buttons.forEach(button => {
                         button.addEventListener('click', function(e) {
                             e.stopPropagation();
                             const wilayaId = this.getAttribute('onclick').match(/\d+/)[0];
-                            window.openWilayaDetails(wilayaId);
+                            window.openMoughataasPanel(wilayaId);
                         });
                     });
                 }
@@ -493,10 +543,71 @@
                     `Wilaya ${allLayers.indexOf(layer) + 1} sur ${allLayers.length}`;
             }
 
-            // Fonction globale pour ouvrir les détails de la wilaya
-            window.openWilayaDetails = function(wilayaId) {
-                window.location.href = `${baseUrl}/wilaya/${wilayaId}/moughataas`;
+            function loadMoughataas(wilayaId) {
+                fetch(`${baseUrl}/api/wilaya/${wilayaId}/moughataas`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const container = document.getElementById('moughataasCircle');
+
+                        if (!data.moughataas || data.moughataas.length === 0) {
+                            container.innerHTML = '<p class="no-moughataas">Aucune Moughataa disponible</p>';
+                            container.style.background = '#ccc';
+                            container.classList.add('show');
+                            return;
+                        }
+
+                        const total = data.moughataas.length;
+                        const sliceAngle = 360 / total;
+                        const colors = data.moughataas.map((_, i) => moughataaColors[i % moughataaColors.length]);
+
+                        // Conic-gradient pour le cercle
+                        let gradient = 'conic-gradient(';
+                        data.moughataas.forEach((m, i) => {
+                            const start = i * sliceAngle;
+                            const end = (i + 1) * sliceAngle;
+                            gradient += `${colors[i]} ${start}deg ${end}deg`;
+                            if (i !== total - 1) gradient += ', ';
+                        });
+                        gradient += ')';
+                        container.style.background = gradient;
+
+                        // Supprimer anciens labels
+                        container.innerHTML = '';
+
+                        const center = 200; // moitié du cercle
+                        const radius = 120; // rayon interne pour placer le texte
+
+                        data.moughataas.forEach((m, i) => {
+                            const angle = i * sliceAngle + sliceAngle / 2;
+                            const rad = angle * (Math.PI / 180);
+                            const x = center + radius * Math.cos(rad) - 40; // centrer horizontalement
+                            const y = center + radius * Math.sin(rad) - 10; // centrer verticalement
+                            const moughataaRoute = @json(route('moughataas.events', ['id' => ':id']));
+
+
+                            const label = document.createElement('div');
+                            label.className = 'moughataa-label';
+                            label.style.left = `${x}px`;
+                            label.style.top = `${y}px`;
+                            label.innerHTML = `<span>${m.nom_fr}</span>`; // texte droit, non incliné
+                            label.addEventListener('click', () => {
+                               // window.location.href = `${baseUrl}/wilaya/${m.id}/moughataas`;
+                                const url = moughataaRoute.replace(':id', m.id);
+                                window.location.href = url;
+                            });
+                            container.appendChild(label);
+                        });
+
+                        container.classList.add('show');
+                    });
+            }
+
+// Fonction pour ouvrir le cercle
+            window.openMoughataasPanel = function(wilayaId) {
+                loadMoughataas(wilayaId);
             };
+
+
 
             function nextWilaya() {
                 if (isAnimationPaused || allLayers.length === 0) return;
@@ -568,6 +679,12 @@
                                 clearInterval(animationInterval);
                                 currentLayerIndex = allLayers.indexOf(layer);
                                 highlightWilaya(layer);
+                                const wilayaName = feature.properties.name;
+                                const normalizedWilayaName = normalizeName(wilayaName);
+                                const wilayaStats = wilayasData.find(w => normalizeName(w.nom) === normalizedWilayaName);
+                                if (wilayaStats && wilayaStats.id) {
+                                    loadMoughataas(wilayaStats.id);
+                                }
                                 pauseAnimation();
                             });
                         }
