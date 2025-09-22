@@ -9,7 +9,7 @@ use App\Models\Question;
 use App\Models\Video;
 use App\Models\Wilaya;
 use App\Models\Moughataa;
-use App\Models\Participant;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -20,19 +20,20 @@ class HomeController extends Controller
         $galeries = Galerie::latest()->take(3)->get();
         $videos = Video::latest()->take(4)->get();
 
-        // Récupérer les wilayas avec leurs participants
-        $wilayas = Wilaya::withCount(['participants as total_participants' => function($query) {
-            $query->select(\DB::raw('sum(nombre_participants)'));
-        }])
-            ->orderBy('code')
+        // Récupérer les wilayas avec leurs participants - CORRIGÉ
+        $wilayas = Wilaya::with(['participants'])
             ->get()
             ->map(function($wilaya) {
+                $totalParticipants = $wilaya->participants->sum('nombre_participants');
+
                 return [
                     'id' => $wilaya->id,
                     'nom' => app()->getLocale() == 'ar' ? $wilaya->nom_ar : $wilaya->nom_fr,
+                    'nom_ar' => $wilaya->nom_ar,
+                    'nom_fr' => $wilaya->nom_fr,
                     'code' => $wilaya->code,
                     'population' => $wilaya->population,
-                    'participants' => $wilaya->total_participants ?? 0
+                    'participants' => $totalParticipants
                 ];
             });
 
@@ -67,6 +68,4 @@ class HomeController extends Controller
             'voterHash'
         ));
     }
-
-
 }

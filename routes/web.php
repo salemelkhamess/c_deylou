@@ -33,7 +33,12 @@ Route::get('/video/show/{id}', [VideoController::class, 'show'])->name('video.sh
 Route::get('/evenement/show/{id}', [EvenementController::class, 'show'])->name('evenement.show');
 Route::get('/wilaya/{wilaya}/moughataas', [App\Http\Controllers\MoughataaController::class, 'byWilaya'])->name('moughataas.by_wilaya');
 Route::get('/api/wilaya/{wilaya}/moughataas', [MoughataaController::class, 'getByWilayaApi'])->name('api.wilaya.moughataas');
-
+Route::get('/wilaya/{id}/moughataas', function($id) {
+    $moughataas = \App\Models\Moughataa::where('wilaya_id', $id)->get();
+    return response()->json([
+        'moughataas' => $moughataas
+    ]);
+});
 
 Route::get('/moughataas/{id}/events', [MoughataaController::class, 'eventByMoughataa'])
     ->name('moughataas.events');
